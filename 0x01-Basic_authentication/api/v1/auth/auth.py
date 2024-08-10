@@ -31,10 +31,21 @@ class Auth:
 
     def require_auth(self, path, excluded_paths):
         """ require auth method """
-        if path is None or excluded_paths is None or excluded_paths == []:
+        f path is None or excluded_paths is None or excluded_paths == []:
             return True
-        if path[-1] != '*':
-            path += '*'
-        if path in excluded_paths:
-            return False
+
+        # Remove trailing slash from path for consistency
+        path = path.rstrip('/')
+
+        for ex_path in excluded_paths:
+            # Remove trailing slash from excluded path
+            ex_path = ex_path.rstrip('/')
+
+            if ex_path.endswith('*'):
+                # check if path starts with the excluded path (minus the *)
+                if path.startswith(ex_path[:-1]):
+                    return False
+            elif ex_path == path:
+                return False
+
         return True
