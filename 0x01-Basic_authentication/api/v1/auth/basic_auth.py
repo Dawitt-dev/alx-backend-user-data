@@ -34,3 +34,15 @@ class BasicAuth(Auth):
             return res.decode('utf-8')
         except Exception:
             return
+
+    def extract_user_credentials(self, b64_auth: str) -> (str, str):
+        """ extract user credentials
+        """
+        if b64_auth is None:
+            return None, None
+        if not isinstance(b64_auth, str):
+            return None, None
+        if ':' not in b64_auth:
+            return None, None
+        creds = b64_auth.split(':', 1)
+        return creds[0], creds[1]
