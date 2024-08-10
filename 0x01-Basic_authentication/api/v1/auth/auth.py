@@ -31,7 +31,7 @@ class Auth:
 
     def require_auth(self, path, excluded_paths):
         """ require auth method """
-        f path is None or excluded_paths is None or excluded_paths == []:
+        if path is None or excluded_paths is None or excluded_paths == []:
             return True
 
         # Remove trailing slash from path for consistency
