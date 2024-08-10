@@ -30,6 +30,8 @@ def view_one_user(user_id: str = None) -> str:
         if g.current_user is None:
             abort(404)
         return jsonify(g.current_user.to_dict())
+    if user_id is None:
+        abort(404)
     user = User.get(user_id)
     if user is None:
         abort(404)
