@@ -29,8 +29,8 @@ class Auth:
         """Returns None - not implemented."""
         return None
 
-    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Checks if authentication is required for the given path."""
+    def require_auth(self, path, excluded_paths):
+        """ require auth method """
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
         if path[-1] != '/':
