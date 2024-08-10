@@ -28,9 +28,9 @@ class BasicAuth(Auth):
         """
         if b64_auth is None:
             return None
-        if not isinstance(b64_auth, str):
-            return None
         try:
-            return b64_auth.encode('utf-8').decode('base64')
+            b64_bytes = b64_auth.encode('utf-8')
+            res = base64.b64decode(b64_bytes)
+            return res.decode('utf-8')
         except Exception:
-            return None
+            return
