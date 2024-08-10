@@ -6,6 +6,7 @@ from uuid import uuid4
 from models.user import User
 from .auth import Auth
 
+
 class SessionAuth(Auth):
     """Handles session-based authentication, inheriting from Auth."""
 
@@ -15,7 +16,8 @@ class SessionAuth(Auth):
         """Generates a new session ID for a given user.
 
         Args:
-            user_id (str, optional): The ID of the user to create a session for.
+            user_id (str, optional): The ID of the
+            user to create a session for.
 
         Returns:
             str: The generated session ID, or None if user_id is invalid.
@@ -60,7 +62,8 @@ class SessionAuth(Auth):
             request (flask.request, optional): The Flask request object.
 
         Returns:
-            bool: True if the session was successfully destroyed, False otherwise.
+            bool: True if the session was successfully destroyed,
+            False otherwise.
         """
         session_id = self.session_cookie(request)
         if session_id and session_id in self.user_id_by_session_id:
