@@ -52,13 +52,17 @@ class BasicAuth(Auth):
                                      user_pwd: str) -> TypeVar('User'):
         """ user object from credentials
         """
-        if user_email is None or user_pwd is None:
-            return None
-        if not isinstance(user_email, str) or not isinstance(user_pwd, str):
-            return None
-        from models.user import User
-        users = User.search({'email': user_email})
-        for user in users:
-            if user.is_valid_password(user_pwd):
-                return user
-        return None
+        if (not user_email or
+                type(user_email) != str or
+                not user_pwd or type(user_pwd) != str):
+            return
+        user = None
+        try:
+            user = User.search({"email": user_email})
+        except Exception:
+            return
+        if not user:
+            return
+        for u in user:
+            if u.is_valid_password(user_pwd):
+                return u
