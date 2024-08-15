@@ -7,6 +7,7 @@ import os
 from typing import Tuple
 from flask import Flask, abort, jsonify, request
 from flask_cors import CORS
+from flask import g
 
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
@@ -88,12 +89,13 @@ def handle_request():
             auth.session_cookie(request) is None:
         abort(401)
 
-    # Verify the user based on the current session or authorization
-    if auth.current_user(request) is None:
+    # Validate the user's credentials
+    user = auth.current_user(request)
+    if user is None:
         abort(403)
 
-    # Set the current user for the request
-    request.current_user = auth.current_user(request)
+    # If the user is authenticated, store the user instance
+    g.current_user = user
 
 
 if __name__ == "__main__":
