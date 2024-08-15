@@ -11,7 +11,7 @@ from flask import g
 
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
-import SessionAuth from api.v1.auth.session_auth
+from api.v1.auth.session_auth import SessionAuth
 from api.v1.views import app_views
 
 # Initialize the Flask application and register blueprints
