@@ -42,15 +42,9 @@ class Auth:
         Returns:
             User: The User object created.
         """
-        # Check if the user already exists
-        ex_user = self._db._session.query(User).filter_by(email=email).first()
-        if ex_user:
+        try:
+            self._db.find_user_by(email=email)
             raise ValueError(f"User {email} already exists")
-        elif NoResultFound:
-            pass
-        # Hash the password
-        hashed_password = _hash_password(password)
-
-        # Create and save the new user
-        new_user = self._db.add_user(email, hashed_password)
-        return new_user
+        except NoResultFound:
+            hashed_password = _hash_password(password)
+            return self._db.add_user(email, hashed_password)
