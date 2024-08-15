@@ -11,8 +11,6 @@ from flask_cors import CORS
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 from api.v1.auth.session_auth import SessionAuth
-from api.v1.auth.session_db_auth import SessionDBAuth
-from api.v1.auth.session_exp_auth import SessionExpAuth
 from api.v1.views import app_views
 
 # Initialize the Flask application and register blueprints
@@ -26,10 +24,6 @@ auth_type = os.getenv('AUTH_TYPE', 'default')
 # Instantiate the appropriate authentication class based on the auth_type
 if auth_type == "session_auth":
     auth = SessionAuth()
-elif auth_type == 'session_exp_auth':
-    auth = SessionExpAuth()
-elif auth_type == 'session_db_auth':
-    auth = SessionDBAuth()
 elif auth_type == "basic_auth":
     auth = BasicAuth()
 else:
