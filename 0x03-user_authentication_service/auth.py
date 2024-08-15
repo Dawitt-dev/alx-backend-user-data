@@ -5,6 +5,7 @@ Auth module for handling authentication operations.
 
 import bcrypt
 from db import DB
+from sqlalchemy.orm.exc import NoResultFound
 from user import User
 
 
@@ -45,7 +46,8 @@ class Auth:
         ex_user = self._db._session.query(User).filter_by(email=email).first()
         if ex_user:
             raise ValueError(f"User {email} already exists")
-
+        elif NoResultFound:
+            pass
         # Hash the password
         hashed_password = _hash_password(password)
 
