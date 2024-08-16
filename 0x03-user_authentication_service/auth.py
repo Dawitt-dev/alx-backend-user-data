@@ -27,6 +27,7 @@ def _hash_password(password: str) -> bytes:
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed
 
+
 def _generate_uuid() -> str:
     """Generates a unique identifier using uuid4.
 
@@ -78,4 +79,3 @@ class Auth:
                                   user.hashed_password)
         except NoResultFound:
             return False
-
