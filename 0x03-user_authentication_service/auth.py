@@ -65,3 +65,11 @@ class Auth:
                                   user.hashed_password)
         except NoResultFound:
             return False
+
+    def _generate_uuid(self) -> str:
+        """Generates a UUID for a user session.
+
+        Returns:
+            str: The UUID generated.
+        """
+        return str(uuid.uuid4())
