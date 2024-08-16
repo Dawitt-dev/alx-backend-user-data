@@ -47,15 +47,20 @@ def login() -> str:
     Return:
       - session_id
     """
+    # get email and password from request
     email = request.form.get('email')
     password = request.form.get('password')
-    try:
-        session_id = AUTH.create_session(email, password)
-        if not session_id:
-            abort(401)
-        return jsonify({"email": email, "message": "logged in"})
-    except NoResultFound:
+    # check if login is valid
+    if not AUTH.valid_login(email, password):
         abort(401)
+    # create a new session
+    session_id = AUTH.create_session(email)
+    # return session_id
+    response = jsonify({"email": email, "message": "logged in"})
+    # set session_id cookie
+    response.set_cookie("session_id", session_id)
+    # return response
+    return response
 
 
 if __name__ == "__main__":
