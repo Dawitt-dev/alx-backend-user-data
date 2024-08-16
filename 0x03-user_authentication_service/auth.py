@@ -4,10 +4,14 @@ Auth module for handling authentication operations.
 """
 
 import bcrypt
+import logging
+from typing import Union
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
 from user import User
 from uuid import uuid4
+
+logging.disable(logging.WARNING)
 
 
 def _hash_password(password: str) -> bytes:
@@ -22,6 +26,14 @@ def _hash_password(password: str) -> bytes:
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed
+
+def _generate_uuid() -> str:
+    """Generates a unique identifier using uuid4.
+
+    Returns:
+        str: A unique identifier.
+    """
+    return str(uuid4())
 
 
 class Auth:
@@ -67,10 +79,3 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid(self) -> str:
-        """Generates a UUID for a user session.
-
-        Returns:
-            str: The UUID generated.
-        """
-        return str(uuid.uuid4())
